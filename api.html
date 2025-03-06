@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Nexon Heroes API 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Heroes 캐릭터 정보 조회</h1>
+    <input type="text" id="characterInput" placeholder="캐릭터 이름을 입력하세요" />
+    <button onclick="fetchCharacterData()">조회하기</button>
+    <div id="result">여기에 결과가 표시됩니다.</div>
+
+    <script>
+        // API 키는 여기에 입력하세요
+        const API_KEY = test_c23aa4b3679c9dc52214856752d895ed4c14ca991ba18191fc459cd358572473efe8d04e6d233bd35cf2fabdeb93fb0d; // 실제 API 키로 교체
+
+        // 캐릭터 데이터를 가져오는 함수
+        function fetchCharacterData() {
+            const characterName = document.getElementById("characterInput").value;
+            if (!characterName) {
+                alert("캐릭터 이름을 입력해주세요!");
+                return;
+            }
+
+            const urlString = "https://open.api.nexon.com/heroes/v1/id?character_name=" + encodeURIComponent(characterName);
+
+            fetch(urlString, {
+                headers: {
+                    "x-nxopen-api-key": API_KEY
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("API 호출 실패: " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 결과를 화면에 표시
+                const resultDiv = document.getElementById("result");
+                if (data && data.characterId) {
+                    resultDiv.innerHTML = `
+                        <strong>캐릭터 이름:</strong> ${data.characterName}<br>
+                        <strong>캐릭터 ID:</strong> ${data.characterId}
+                    `;
+                } else {
+                    resultDiv.innerHTML = "캐릭터를 찾을 수 없습니다.";
+                }
+            })
+            .catch(error => {
+                console.error("에러:", error);
+                document.getElementById("result").innerHTML = "오류 발생: " + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
