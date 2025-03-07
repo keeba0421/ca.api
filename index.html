@@ -10,7 +10,7 @@
             padding: 20px;
             text-align: center;
         }
-        input, button {
+        input, select, button {
             margin: 5px;
             padding: 5px;
         }
@@ -25,10 +25,14 @@
     <h1>Nexon 캐릭터 ID 조회</h1>
     <form id="apiForm">
         <label for="userName">캐릭터 이름:</label>
-        <input type="text" id="userName" placeholder="드라마" required>
+        <input type="text" id="userName" placeholder="닉네임" required>
         <br>
         <label for="worldName">월드 이름:</label>
-        <input type="text" id="worldName" placeholder="해피" required>
+        <select id="worldName" required>
+            <option value="" disabled selected>월드를 선택하세요</option>
+            <option value="해피">해피</option>
+            <option value="드림">드림</option>
+        </select>
         <br>
         <button type="submit">조회하기</button>
     </form>
