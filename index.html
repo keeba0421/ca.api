@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexon API 호출</title>
+    <title>Nexon API 캐릭터 ID 조회</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
-        input, button { margin: 5px; padding: 5px; }
-        #result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        input, button {
+            margin: 5px;
+            padding: 5px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -21,17 +32,25 @@
         <br>
         <button type="submit">조회하기</button>
     </form>
-    <div id="result">여기에 결과가 표시됩니다.</div>
+    <div id="result">결과가 여기에 표시됩니다.</div>
 
     <script>
         document.getElementById('apiForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+            event.preventDefault(); // 폼 기본 제출 방지
 
+            // 입력값 가져오기
             const userName = document.getElementById('userName').value;
             const worldName = document.getElementById('worldName').value;
-            const apiKey = 'test_c23aa4b3679c9dc52214856752d895eda5a258e07d8df6796bb52c46b1592751efe8d04e6d233bd35cf2fabdeb93fb0d';
-            const url = `https://open.api.nexon.com/ca/v1/id?user_name=${encodeURIComponent(userName)}&world_name=${encodeURIComponent(worldName)}`;
 
+            // 한글일 경우 URL 인코딩
+            const encodedUserName = encodeURIComponent(userName);
+            const encodedWorldName = encodeURIComponent(worldName);
+
+            // API 요청 URL 구성
+            const apiKey = 'test_c23aa4b3679c9dc52214856752d895eda5a258e07d8df6796bb52c46b1592751efe8d04e6d233bd35cf2fabdeb93fb0d';
+            const url = `https://open.api.nexon.com/ca/v1/id?user_name=${encodedUserName}&world_name=${encodedWorldName}`;
+
+            // Fetch API로 요청 보내기
             fetch(url, {
                 method: 'GET',
                 headers: {
@@ -40,16 +59,23 @@
                 }
             })
             .then(response => {
-                if (!response.ok) throw new Error(`오류: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP 오류! 상태: ${response.status}`);
+                }
                 return response.json();
             })
             .then(data => {
-                document.getElementById('result').innerHTML = data.ocid 
-                    ? `<strong>캐릭터 ID:</strong> ${data.ocid}` 
-                    : '캐릭터를 찾을 수 없습니다.';
+                // 결과 표시
+                const resultDiv = document.getElementById('result');
+                if (data.ocid) {
+                    resultDiv.innerHTML = `<strong>캐릭터 ID (ocid):</strong> ${data.ocid}`;
+                } else {
+                    resultDiv.innerHTML = '캐릭터를 찾을 수 없습니다.';
+                }
             })
             .catch(error => {
-                document.getElementById('result').innerHTML = `<span style="color: red;">${error.message}</span>`;
+                // 에러 처리
+                document.getElementById('result').innerHTML = `<span style="color: red;">오류 발생: ${error.message}</span>`;
             });
         });
     </script>
