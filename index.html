@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexon API 호출</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        input, button { margin: 5px; padding: 5px; }
+        #result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Nexon 캐릭터 ID 조회</h1>
+    <form id="apiForm">
+        <label for="userName">캐릭터 이름:</label>
+        <input type="text" id="userName" placeholder="드라마" required>
+        <br>
+        <label for="worldName">월드 이름:</label>
+        <input type="text" id="worldName" placeholder="해피" required>
+        <br>
+        <button type="submit">조회하기</button>
+    </form>
+    <div id="result">여기에 결과가 표시됩니다.</div>
+
+    <script>
+        document.getElementById('apiForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const userName = document.getElementById('userName').value;
+            const worldName = document.getElementById('worldName').value;
+            const apiKey = 'test_c23aa4b3679c9dc52214856752d895eda5a258e07d8df6796bb52c46b1592751efe8d04e6d233bd35cf2fabdeb93fb0d';
+            const url = `https://open.api.nexon.com/ca/v1/id?user_name=${encodeURIComponent(userName)}&world_name=${encodeURIComponent(worldName)}`;
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'x-nxopen-api-key': apiKey
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error(`오류: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('result').innerHTML = data.ocid 
+                    ? `<strong>캐릭터 ID:</strong> ${data.ocid}` 
+                    : '캐릭터를 찾을 수 없습니다.';
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = `<span style="color: red;">${error.message}</span>`;
+            });
+        });
+    </script>
+</body>
+</html>
