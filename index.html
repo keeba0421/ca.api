@@ -63,13 +63,24 @@
                 }
             })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP 오류! 상태: ${response.status}`);
+                // 상태 코드에 따라 처리
+                const status = response.status;
+                if (status === 200) {
+                    return response.json(); // 성공 시 JSON 파싱
+                } else if (status === 400) {
+                    throw new Error('잘못된 요청입니다. 입력값을 확인해주세요.');
+                } else if (status === 401) {
+                    throw new Error('인증 실패: API 키가 유효하지 않습니다.');
+                } else if (status === 404) {
+                    throw new Error('캐릭터를 찾을 수 없습니다.');
+                } else if (status === 429) {
+                    throw new Error('요청 횟수 초과: 잠시 후 다시 시도해주세요.');
+                } else {
+                    throw new Error(`알 수 없는 오류! 상태 코드: ${status}`);
                 }
-                return response.json();
             })
             .then(data => {
-                // 결과 표시
+                // 결과 표시 (200 OK일 때)
                 const resultDiv = document.getElementById('result');
                 if (data.ocid) {
                     resultDiv.innerHTML = `<strong>캐릭터 ID (ocid):</strong> ${data.ocid}`;
@@ -79,7 +90,7 @@
             })
             .catch(error => {
                 // 에러 처리
-                document.getElementById('result').innerHTML = `<span style="color: red;">오류 발생: ${error.message}</span>`;
+                document.getElementById('result').innerHTML = `<span style="color: red;">오류: ${error.message}</span>`;
             });
         });
     </script>
