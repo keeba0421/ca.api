@@ -1,26 +1,34 @@
-// script.js
 async function searchUser() {
+    // 입력값 가져오기
     const nicknameInput = document.getElementById('nickname');
     let userName = nicknameInput.value.trim();
 
     // 대문자를 소문자로 변환
     userName = userName.toLowerCase();
 
-    // 결과를 화면에 표시하기 위해 입력값 확인
-    console.log(`입력된 유저 닉네임: '${userName}'`);
+    // 결과창 초기화
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '';
 
-    // API 키 설정
-    const apiKey = "test_c23aa4b3679c9dc52214856752d895edb607ed3d30af633807b946b8e49680ecefe8d04e6d233bd35cf2fabdeb93fb0d";
+    // 입력값 검증
+    if (userName === '') {
+        resultDiv.innerHTML = '<p style="color: red;">오류: 닉네임을 입력하세요.</p>';
+        return;
+    }
+
+    // API 키 설정 (실제 API 키로 대체 필요)
+    const apiKey = "your_api_key_here"; // 여기에 실제 API 키를 입력하세요
     const headers = {
         "accept": "application/json",
         "x-nxopen-api-key": apiKey
     };
 
     try {
-        // API 호출 URL (Nexon API 가정)
+        // API 호출 (Nexon API 예시)
         const url = `https://open.api.nexon.com/ca/v1/id?user_name=${encodeURIComponent(userName)}&world_name=해피`;
         const response = await fetch(url, { headers });
 
+        // 응답 상태 확인
         if (!response.ok) {
             throw new Error(`API 호출 실패: ${response.status}`);
         }
@@ -28,7 +36,7 @@ async function searchUser() {
         const data = await response.json();
         displayResult(data);
     } catch (error) {
-        document.getElementById('result').innerHTML = `<p style="color: red;">오류: ${error.message}</p>`;
+        resultDiv.innerHTML = `<p style="color: red;">오류: ${error.message}</p>`;
     }
 }
 
