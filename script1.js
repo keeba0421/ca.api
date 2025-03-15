@@ -74,7 +74,7 @@ function displayResult(idData, basicData, itemData, userName) {
     if (basicData) {
         console.log("basicData 존재:", basicData);
         html += '<h3>유저 기본 정보</h3>';
-        html += `<p><strong>유저 이름:</strong> ${userName} (API에서 제공되지 않음)</p>`;
+        html += `<p><strong>유저 이름:</strong> ${userName}</p>`;
         html += `<p><strong>계정 생성일:</strong> ${new Date(basicData.user_date_create).toLocaleString()}</p>`;
         html += `<p><strong>마지막 로그인:</strong> ${new Date(basicData.user_date_last_login).toLocaleString()}</p>`;
         html += `<p><strong>마지막 로그아웃:</strong> ${new Date(basicData.user_date_last_logout).toLocaleString()}</p>`;
