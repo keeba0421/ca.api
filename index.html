@@ -5,35 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API 호출 및 결과 표시</title>
     <style>
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        input[type="text"] {
-            width: 70%;
-            padding: 10px;
-        }
-        button {
-            padding: 10px 20px;
-        }
-        .result {
-            margin-top: 20px;
-            width: 500px;
-            background-color: #f0f0f0;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            min-height: 100px;
-            overflow: auto;
-        }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        input[type="text"] { width: 70%; padding: 10px; }
+        button { padding: 10px 20px; }
+        .result { margin-top: 20px; width: 500px; background-color: #f0f0f0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; min-height: 100px; overflow: auto; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>캐릭터 닉네임 검색</h1>
         <input type="text" id="nickname" placeholder="유저 닉네임을 입력하세요" />
-        <button onclick="searchUser()">검색</button>
+        <button id="searchButton">검색</button>
         <div class="result" id="result"></div>
     </div>
     <script src="script1.js"></script>
