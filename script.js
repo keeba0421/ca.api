@@ -13,7 +13,7 @@ async function searchUser() {
     const apiKey = "testapi"; // 실제 API 키로 대체하세요
     const headers = {
         "accept": "application/json",
-        "x-nxopen-api-key": test_c23aa4b3679c9dc52214856752d895edb607ed3d30af633807b946b8e49680ecefe8d04e6d233bd35cf2fabdeb93fb0d
+        "x-nxopen-api-key": "test_c23aa4b3679c9dc52214856752d895edb607ed3d30af633807b946b8e49680ecefe8d04e6d233bd35cf2fabdeb93fb0d"
     };
 
     try {
