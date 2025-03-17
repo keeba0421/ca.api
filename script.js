@@ -17,7 +17,7 @@ async function searchUser() {
     }
 
     // API 키 설정 (실제 API 키로 대체 필요)
-    const apiKey = "test_c23aa4b3679c9dc52214856752d895edb607ed3d30af633807b946b8e49680ecefe8d04e6d233bd35cf2fabdeb93fb0d"; // 여기에 실제 API 키를 입력하세요
+    const apiKey = "--"; // 여기에 실제 API 키를 입력하세요
     const headers = {
         "accept": "application/json",
         "x-nxopen-api-key": apiKey
