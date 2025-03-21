@@ -14,7 +14,10 @@ function displayResult(idData, basicData, itemData, userName, avatarUrl, levelIm
         html += `<p><strong>마지막 로그인:</strong> ${new Date(basicData.user_date_last_login).toLocaleString()}</p>`;
         html += `<p><strong>마지막 로그아웃:</strong> ${new Date(basicData.user_date_last_logout).toLocaleString()}</p>`;
         html += `<p><strong>경험치:</strong> ${basicData.user_exp}</p>`;
-        html += `<p><strong>레벨:</strong> <img src="${levelImgUrl}" alt="레벨 이미지" class="level-img"> ${basicData.user_level}</p>`;
+        html += `<p><strong>레벨:</strong> <img src="${levelImgUrl}" 
+/*
+        alt="레벨 이미지" class="level-img"> ${basicData.user_level}</p>`;
+*/
     } else {
         html += '<p>유저 기본 정보가 없습니다.</p>';
     }
@@ -31,7 +34,7 @@ function displayResult(idData, basicData, itemData, userName, avatarUrl, levelIm
     }
 
     resultDiv.innerHTML = html;
-
+/*
     // 아바타 이미지 표시
     const avatarDisplay = document.getElementById('avatar-display');
     if (avatarDisplay && avatarUrl) {
@@ -40,7 +43,7 @@ function displayResult(idData, basicData, itemData, userName, avatarUrl, levelIm
         console.error('avatar-display 요소를 찾을 수 없거나 avatarUrl이 없습니다.');
     }
 }
-
+*/
 async function searchUser() {
     const nicknameInput = document.getElementById('nickname');
     let userName = nicknameInput.value.trim().toLowerCase();
