@@ -20,7 +20,7 @@ exports.handler = async (event) => {
         const itemUrl = `https://open.api.nexon.com/ca/v1/user/item-equipment?ouid=${idData.ouid}`;
         const itemResponse = await axios.get(itemUrl, { headers: { "x-nxopen-api-key": apiKey } });
         const itemData = itemResponse.data;
-
+/*
         // 웹페이지에서 아바타와 레벨 이미지 URL 추출
         const profileUrl = `https://ca.nexon.com/MyBlock/Information/${encodeURIComponent(userName)}/0`;
         const profileResponse = await axios.get(profileUrl);
@@ -31,7 +31,7 @@ exports.handler = async (event) => {
 
         // 레벨 이미지 URL 추출 (첫 번째 레벨 아이콘)
         const levelImgSrc = $('.personal .level_icon img').first().attr('src');
-
+*/
         return {
             statusCode: 200,
             body: JSON.stringify({ 
