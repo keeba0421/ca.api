@@ -38,8 +38,7 @@ exports.handler = async (event) => {
                 idData, 
                 basicData, 
                 itemData, 
-                avatarUrl: avatarImgSrc, 
-                levelImgUrl: levelImgSrc 
+                
             }),
         };
     } catch (error) {
