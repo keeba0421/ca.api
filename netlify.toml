@@ -1,2 +1,5 @@
 [functions]
   directory = "netlify/functions"  # 함수가 위치한 디렉토리
+  [build]
+    command = "CI= npm run build"
+    publish = "build"
