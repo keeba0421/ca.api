@@ -1,4 +1,5 @@
 const axios = require('axios');
+const cheerio = require('cheerio');
 
 exports.handler = async (event) => {
     const apiKey = process.env.API_KEY; // Netlify 환경 변수에서 가져옴
@@ -20,16 +21,26 @@ exports.handler = async (event) => {
         const itemResponse = await axios.get(itemUrl, { headers: { "x-nxopen-api-key": apiKey } });
         const itemData = itemResponse.data;
 
-        // 아바타 이미지 URL 추출 (item_equipment에서 아바타 아이템 찾기)
-        let avatarUrl = null;
-        if (itemData.item_equipment && itemData.item_equipment.length > 0) {
-            const avatarItem = itemData.item_equipment.find(item => item.item_equipment_slot_name.includes('아바타'));
-            avatarUrl = avatarItem ? avatarItem.item_icon_url : itemData.item_equipment[0].item_icon_url; // 기본값으로 첫 번째 아이템 사용
-        }
+        // 웹페이지에서 아바타와 레벨 이미지 URL 추출
+        const profileUrl = `https://ca.nexon.com/MyBlock/Information/${encodeURIComponent(userName)}/0`;
+        const profileResponse = await axios.get(profileUrl);
+        const $ = cheerio.load(profileResponse.data);
+
+        // 아바타 이미지 URL 추출
+        const avatarImgSrc = $('.personal .avatar img').attr('src');
+
+        // 레벨 이미지 URL 추출 (첫 번째 레벨 아이콘)
+        const levelImgSrc = $('.personal .level_icon img').first().attr('src');
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ idData, basicData, itemData, avatarUrl }),
+            body: JSON.stringify({ 
+                idData, 
+                basicData, 
+                itemData, 
+                avatarUrl: avatarImgSrc, 
+                levelImgUrl: levelImgSrc 
+            }),
         };
     } catch (error) {
         return {
