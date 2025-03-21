@@ -6,22 +6,31 @@
     <title>크아 정보 검색</title>
    
     <style>
-         input[type="1초정도 기다려주세요."] {
-            width: 300px;
-            height: 40px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-        }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         input[type="text"] { width: 70%; padding: 10px; }
         button { padding: 10px 20px; }
         .result { margin-top: 20px; width: 500px; background-color: #f0f0f0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; min-height: 100px; overflow: auto; }
+
+        .notice-box {
+            border: 1px solid black; /* 검은색 테두리 */
+            background-color: white; /* 흰색 배경 */
+            padding: 20px; /* 내부 여백 */
+            margin: 20px 0; /* 상하 여백 */
+            font-size: 16px; /* 타이틀보다 작은 글씨 크기 */
+            width: 80%; /* 박스 너비 */
+            max-width: 600px; /* 최대 너비 제한 */
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
+        }
+        
     </style>
 </head>
 <body>
     <div class="container">
         <h1>캐릭터 닉네임 검색</h1>
+        <div class="notice-box">
+        <p>검색 버튼 클릭 후 1초정도 기다려주세요.</p>
+        <p>11</p>
+    </div>
         <input type="text" id="nickname" placeholder="유저 닉네임을 입력하세요" />
         <button id="searchButton">검색</button>
         <div class="result" id="result"></div>
