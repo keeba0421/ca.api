@@ -63,13 +63,6 @@ function displayResult(idData, basicData, itemData, userName) {
     const resultDiv = document.getElementById('result');
     let html = '<h2>검색 결과</h2>';
 
-    if (idData && idData.ouid) {
-        console.log("ouid 존재:", idData.ouid);
-        html += `<p><strong>OUID:</strong> ${idData.ouid}</p>`;
-    } else {
-        console.log("ouid 없음");
-        html += '<p>OUID 정보가 없습니다.</p>';
-    }
 
     if (basicData) {
         console.log("basicData 존재:", basicData);
