@@ -1,4 +1,7 @@
 // script1.js
+function displayResult(idData, basicData, itemData, userName) {
+    // 함수 내용
+}
 async function searchUser() {
     const nicknameInput = document.getElementById('nickname');
     let userName = nicknameInput.value.trim().toLowerCase();
