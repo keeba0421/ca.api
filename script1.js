@@ -17,6 +17,7 @@ function displayResult(idData, basicData, itemData, userName) {
         html += `<p><strong>마지막 로그아웃:</strong> ${new Date(basicData.user_date_last_logout).toLocaleString()}</p>`;
         html += `<p><strong>경험치:</strong> ${basicData.user_exp}</p>`;
         html += `<p><strong>레벨:</strong> ${basicData.user_level}</p>`;
+        //html += '<a href="이동할 웹페이지 url">공식홈페이지 프로필 바로가기</a>';
     } else {
         html += '<p>유저 기본 정보가 없습니다.</p>';
     }
