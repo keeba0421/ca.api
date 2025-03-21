@@ -20,7 +20,7 @@ function displayResult(idData, basicData, itemData, userName) {
         html += `<p><a href="https://ca.nexon.com/MyBlock/Information/${encodeURIComponent(userName)}/0" target="_blank">공식홈페이지 프로필 바로가기</a></p>`;
     }
         //html += '<a href="이동할 웹페이지 url">공식홈페이지 프로필 바로가기</a>';
-    } else {
+  else {
         html += '<p>유저 기본 정보가 없습니다.</p>';
     }
 
