@@ -14,10 +14,8 @@ function displayResult(idData, basicData, itemData, userName, avatarUrl, levelIm
         html += `<p><strong>마지막 로그인:</strong> ${new Date(basicData.user_date_last_login).toLocaleString()}</p>`;
         html += `<p><strong>마지막 로그아웃:</strong> ${new Date(basicData.user_date_last_logout).toLocaleString()}</p>`;
         html += `<p><strong>경험치:</strong> ${basicData.user_exp}</p>`;
-        html += `<p><strong>레벨:</strong> <img src="${levelImgUrl}" 
-/*
-        alt="레벨 이미지" class="level-img"> ${basicData.user_level}</p>`;
-*/
+        html += `<p><strong>레벨:</strong> <img src="${levelImgUrl}"</p>`;
+
     } else {
         html += '<p>유저 기본 정보가 없습니다.</p>';
     }
@@ -35,6 +33,8 @@ function displayResult(idData, basicData, itemData, userName, avatarUrl, levelIm
 
     resultDiv.innerHTML = html;
 /*
+ alt="레벨 이미지" class="level-img"> ${basicData.user_level}
+
     // 아바타 이미지 표시
     const avatarDisplay = document.getElementById('avatar-display');
     if (avatarDisplay && avatarUrl) {
