@@ -1,5 +1,4 @@
-function displayResult(idData, basicData, itemData, userName, avatarUrl) {
-    console.log('displayResult 호출됨:', { idData, basicData, itemData, userName, avatarUrl });
+function displayResult(idData, basicData, itemData, userName, avatarUrl, levelImgUrl) {
     const resultDiv = document.getElementById('result');
     if (!resultDiv) {
         console.error('result 요소를 찾을 수 없습니다.');
@@ -15,7 +14,7 @@ function displayResult(idData, basicData, itemData, userName, avatarUrl) {
         html += `<p><strong>마지막 로그인:</strong> ${new Date(basicData.user_date_last_login).toLocaleString()}</p>`;
         html += `<p><strong>마지막 로그아웃:</strong> ${new Date(basicData.user_date_last_logout).toLocaleString()}</p>`;
         html += `<p><strong>경험치:</strong> ${basicData.user_exp}</p>`;
-        html += `<p><strong>레벨:</strong> ${basicData.user_level}</p>`;
+        html += `<p><strong>레벨:</strong> <img src="${levelImgUrl}" alt="레벨 이미지" style="vertical-align: middle;"> ${basicData.user_level}</p>`;
     } else {
         html += '<p>유저 기본 정보가 없습니다.</p>';
     }
@@ -56,10 +55,9 @@ async function searchUser() {
     try {
         const response = await fetch(`/.netlify/functions/fetchData?userName=${encodeURIComponent(userName)}`);
         const data = await response.json();
-        console.log('API 응답:', data);
 
         if (response.ok) {
-            displayResult(data.idData, data.basicData, data.itemData, userName, data.avatarUrl);
+            displayResult(data.idData, data.basicData, data.itemData, userName, data.avatarUrl, data.levelImgUrl);
         } else {
             throw new Error(data.error);
         }
