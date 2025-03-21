@@ -1,6 +1,5 @@
-// script1.js
-function displayResult(idData, basicData, itemData, userName) {
-    console.log('displayResult 호출됨:', { idData, basicData, itemData, userName }); // 디버깅 로그
+function displayResult(idData, basicData, itemData, userName, avatarUrl) {
+    console.log('displayResult 호출됨:', { idData, basicData, itemData, userName, avatarUrl });
     const resultDiv = document.getElementById('result');
     if (!resultDiv) {
         console.error('result 요소를 찾을 수 없습니다.');
@@ -33,6 +32,14 @@ function displayResult(idData, basicData, itemData, userName) {
     }
 
     resultDiv.innerHTML = html;
+
+    // 아바타 이미지 표시
+    const avatarDisplay = document.getElementById('avatar-display');
+    if (avatarDisplay && avatarUrl) {
+        avatarDisplay.style.backgroundImage = `url(${avatarUrl})`;
+    } else {
+        console.error('avatar-display 요소를 찾을 수 없거나 avatarUrl이 없습니다.');
+    }
 }
 
 async function searchUser() {
@@ -49,10 +56,10 @@ async function searchUser() {
     try {
         const response = await fetch(`/.netlify/functions/fetchData?userName=${encodeURIComponent(userName)}`);
         const data = await response.json();
-        console.log('API 응답:', data); // 디버깅 로그
+        console.log('API 응답:', data);
 
         if (response.ok) {
-            displayResult(data.idData, data.basicData, data.itemData, userName);
+            displayResult(data.idData, data.basicData, data.itemData, userName, data.avatarUrl);
         } else {
             throw new Error(data.error);
         }
