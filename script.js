@@ -9,7 +9,7 @@ async function searchUser() {
         return;
     }
 
-    const apiKey = "test_c23aa4b3679c9dc52214856752d895edb607ed3d30af633807b946b8e49680ecefe8d04e6d233bd35cf2fabdeb93fb0d";
+    const apiKey = "const";
     const headers = {
         "accept": "application/json",
         "x-nxopen-api-key": apiKey
