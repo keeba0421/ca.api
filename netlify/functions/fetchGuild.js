@@ -33,9 +33,13 @@ exports.handler = async (event) => {
         });
         const guildData = guildResponse.data;
 
+        // OUID와 길드 ID를 함께 반환
         return {
             statusCode: 200,
-            body: JSON.stringify(guildData),
+            body: JSON.stringify({
+                ouid: idData.ouid,
+                guild_id: guildData.guild_id
+            }),
         };
     } catch (error) {
         return {
