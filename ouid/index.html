@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>크아 OUID 검색</title>
+    <style>
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        input[type="text"] { width: 70%; padding: 10px; }
+        button { padding: 10px 20px; }
+        .result { margin-top: 20px; width: 500px; background-color: #f0f0f0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; min-height: 100px; overflow: auto; }
+        .notice-box {
+            border: 1px solid black;
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 16px;
+            width: 80%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>크아 OUID 검색</h1>
+        <div class="notice-box">
+            <p>**해피서버 캐릭터만 검색합니다**</p>
+            <p>검색 버튼 클릭 후 1초정도 기다려주세요.</p>
+            <a href="https://open.kakao.com/me/026" target="_blank">오픈 프로필</a>
+        </div>
+        <input type="text" id="nickname" placeholder="유저 닉네임을 입력하세요" />
+        <button id="searchButton">검색</button>
+        <div class="result" id="result"></div>
+    </div>
+    <script src="script.js" defer></script>
+</body>
+</html>
