@@ -50,7 +50,7 @@ async function searchUser() {
     }
 
     try {
-        const response = await fetch(`/.netlify/functions/fetchData?userName=${encodeURIComponent(userName)}`);
+        const response = await fetch(`/.netlify/functions/fetchData_dream?userName=${encodeURIComponent(userName)}`);
         const data = await response.json();
         console.log('API 응답:', data); // 디버깅 로그
 
