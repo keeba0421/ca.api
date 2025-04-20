@@ -1,8 +1,9 @@
+// stackbit.config.ts
 import { defineStackbitConfig } from "@stackbit/types";
 import { GitContentSource } from "@stackbit/cms-git";
 
 export default defineStackbitConfig({
-  // 기존 설정
+  stackbitVersion: "~0.6.0",
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
@@ -16,8 +17,12 @@ export default defineStackbitConfig({
           fields: [{ name: "title", type: "string", required: true }]
         }
       ],
+      assetsConfig: {
+        referenceType: "static",
+        staticDir: "public",
+        uploadDir: "images",
+        publicPath: "/"
+      }
     })
-  ],
-  // devCommand 추가
-  devCommand: "npm run dev" // 프로젝트에 맞는 명령어로 변경
+  ]
 });
