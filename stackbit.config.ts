@@ -1,9 +1,8 @@
-// stackbit.config.ts
 import { defineStackbitConfig } from "@stackbit/types";
 import { GitContentSource } from "@stackbit/cms-git";
 
 export default defineStackbitConfig({
-  // ...
+  // 기존 설정
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
@@ -11,7 +10,6 @@ export default defineStackbitConfig({
       models: [
         {
           name: "Page",
-          // Define the model as a page model
           type: "page",
           urlPath: "/{slug}",
           filePath: "content/pages/{slug}.json",
@@ -19,5 +17,7 @@ export default defineStackbitConfig({
         }
       ],
     })
-  ]
+  ],
+  // devCommand 추가
+  devCommand: "npm run dev" // 프로젝트에 맞는 명령어로 변경
 });
