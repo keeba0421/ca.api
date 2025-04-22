@@ -1,4 +1,3 @@
-// stackbit.config.ts
 import {
   defineStackbitConfig,
   getLocalizedFieldForLocale,
@@ -66,5 +65,8 @@ export default defineStackbitConfig({
         };
       })
       .filter(Boolean) as SiteMapEntry[];
-  }
+  },
+
+  // 4: devCommand 추가
+  devCommand: "next dev" // 사용 중인 프레임워크에 맞는 명령어로 수정
 });
