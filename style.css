@@ -1,0 +1,239 @@
+/* 크레이지 아케이드 캐릭터 조회 웹사이트 스타일 */
+
+/* CSS 변수 시스템 */
+:root {
+    /* 크레이지 아케이드 브랜드 컬러 팔레트 */
+    --primary-color: #ff6b35;
+    --secondary-color: #4ecdc4;
+    --accent-color: #45b7d1;
+    --background-color: #f8f9fa;
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --success-color: #27ae60;
+    --error-color: #e74c3c;
+    --warning-color: #f39c12;
+    
+    /* 타이포그래피 */
+    --font-primary: 'Noto Sans KR', sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    
+    /* 간격 시스템 */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* 반지름 및 그림자 */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 6px rgba(0,0,0,0.15);
+    --shadow-heavy: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* 전역 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+
+/* 컨테이너 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+/* 헤더 스타일 */
+.header {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: white;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.header h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: var(--spacing-sm);
+}
+
+.subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* 설명 섹션 */
+.description {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-light);
+    margin-bottom: var(--spacing-xl);
+    border-left: 4px solid var(--accent-color);
+}
+
+.important {
+    color: var(--error-color);
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.notice {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+}
+
+/* 검색 섹션 */
+.search-section {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-medium);
+    margin-bottom: var(--spacing-xl);
+}
+
+.search-form {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    flex: 1;
+    min-width: 250px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 2px solid #e9ecef;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-lg);
+    font-family: var(--font-primary);
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(69, 183, 209, 0.1);
+    transform: translateY(-1px);
+}
+
+.search-button {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: linear-gradient(45deg, var(--primary-color), #ff8a65);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.search-button.loading {
+    background: linear-gradient(45deg, #ccc, #999);
+    cursor: not-allowed;
+}
+
+/* 캐릭터 정보 카드 */
+.character-info {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-light);
+    border: 1px solid #dee2e6;
+}
+
+.character-info h3 {
+    color: var(--primary-color);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* 장비 아이템 스타일 */
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.equipment-item {
+    background: linear-gradient(135deg, #fff, #f8f9fa);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.equipment-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--secondary-color);
+}
+
+/* 에러 메시지 */
+.error-message {
+    background: linear-gradient(135deg, #ffe6e6, #ffcccc);
+    color: var(--error-color);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--error-color);
+    margin: var(--spacing-lg) 0;
+    font-weight: 500;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-sm);
+    }
+    
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-input {
+        min-width: auto;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+}
