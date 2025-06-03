@@ -1,43 +1,66 @@
-ca 킵세
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bnbgg(크아정보조회)</title>
-    <style>
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        input[type="text"] { width: 70%; padding: 10px; }
-        button { padding: 10px 20px; }
-        .result { margin-top: 20px; width: 500px; background-color: #f0f0f0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; min-height: 100px; overflow: auto; }
-        .notice-box {
-            border: 1px solid black;
-            background-color: white;
-            padding: 20px;
-            margin: 20px 0;
-            font-size: 16px;
-            width: 80%;
-            max-width: 600px;
-            box-sizing: border-box;
-        }
-        #avatar-display { width: 200px; height: 200px; background-size: cover; margin-top: 20px; }
-        .level-img { vertical-align: middle; margin-right: 5px; }
-    </style>
+    <title>크아 캐릭터 조회</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>크아 캐릭터 조회</h1>
-        <div class="notice-box">
-            <p>**해피서버 캐릭터만 검색합니다**</p>
-            <p>검색 버튼 클릭 후 1초정도 기다려주세요.</p>
-            <a href="https://open.kakao.com/me/026" target="_blank">오픈 프로필</a>
-            <p><a href="https://bnbgg.netlify.app/history/" target="_blank">업데이트 내역</a></p>
-        </div>
-        <input type="text" id="nickname" placeholder="유저 닉네임을 입력하세요" />
-        <button id="searchButton">검색</button>
-        <div class="result" id="result"></div>
-        <div id="avatar-display"></div>
+        <!-- 헤더 섹션 -->
+        <header class="header">
+            <h1>크아 캐릭터 조회</h1>
+            <p class="subtitle">해피서버 캐릭터 정보를 실시간으로 확인하세요</p>
+        </header>
+        
+        <!-- 설명 섹션 -->
+        <section class="description">
+            <p class="important">
+                <strong>해피서버 캐릭터만 검색됩니다</strong>
+            </p>
+            <p class="notice">
+                검색 버튼 클릭 후 1-2초 정도 기다려주세요.
+            </p>
+        </section>
+        
+        <!-- 검색 섹션 -->
+        <section class="search-section">
+            <form class="search-form" onsubmit="return false;">
+                <input 
+                    type="text" 
+                    id="nickname" 
+                    class="search-input" 
+                    placeholder="캐릭터 닉네임을 입력하세요"
+                    autocomplete="off"
+                >
+                <button 
+                    type="button" 
+                    id="searchButton" 
+                    class="search-button"
+                >
+                    검색
+                </button>
+            </form>
+        </section>
+        
+        <!-- 결과 표시 섹션 -->
+        <section class="results-section">
+            <div id="result" class="result-container"></div>
+        </section>
+        
+        <!-- 추가 링크 섹션 -->
+        <section class="links-section" style="margin-top: 2rem; text-align: center; padding: 1rem;">
+            <a href="https://open.kakao.com/o/gOCVg57f" target="_blank" class="profile-link">
+                💬 오픈 프로필
+            </a>
+            <a href="notice/" target="_blank" class="profile-link" style="margin-left: 1rem;">
+                📋 업데이트 내역
+            </a>
+        </section>
     </div>
-    <script src="script1.js" defer></script>
+
+    <script src="script1.js"></script>
 </body>
 </html>
