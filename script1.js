@@ -65,11 +65,12 @@ async function searchUser() {
     }
 }
 
-document.getElementById('searchButton').addEventListener('click', searchUser);
-
-document.getElementById('nickname').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault(); 
-        searchUser();       
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('nickname').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            searchUser();
+        }
+    });
+    document.getElementById('searchButton').addEventListener('click', searchUser);
 });
