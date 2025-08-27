@@ -1,27 +1,62 @@
-ca 킵세
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Bnbgg(크아정보조회)</title>
     <style>
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        input[type="text"] { width: 70%; padding: 10px; }
-        button { padding: 10px 20px; }
-        .result { margin-top: 20px; width: 500px; background-color: #f0f0f0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; min-height: 100px; overflow: auto; }
-        .notice-box {
-            border: 1px solid black;
-            background-color: white;
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 600px;
             padding: 20px;
-            margin: 20px 0;
-            font-size: 16px;
-            width: 80%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .notice-box,
+        input[type="text"],
+        button,
+        .result,
+        #avatar-display {
+            width: 100%;
             max-width: 600px;
             box-sizing: border-box;
+            margin: 10px 0;
         }
-        #avatar-display { width: 200px; height: 200px; background-size: cover; margin-top: 20px; }
-        .level-img { vertical-align: middle; margin-right: 5px; }
+        input[type="text"] {
+            padding: 10px;
+        }
+        button {
+            padding: 10px;
+        }
+        .result {
+            background-color: #f0f0f0;
+            min-height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: auto;
+        }
+        .notice-box {
+            background-color: white;
+            border: 1px solid black;
+            padding: 20px;
+            font-size: 16px;
+        }
+        #avatar-display {
+            height: 200px;
+            background-size: cover;
+        }
     </style>
 </head>
 <body>
