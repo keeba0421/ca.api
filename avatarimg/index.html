@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>크아 아바타 조회</title>
   <style>
     #avatarBox {
@@ -23,16 +23,28 @@
       border-radius: 6px;
       min-height: 18px;
     }
+    #urlBox {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #336699;
+      background: #e8f0fe;
+      padding: 8px;
+      border-radius: 6px;
+      word-break: break-all;
+    }
   </style>
 </head>
 <body>
   <h2>크아 캐릭터 아바타 조회</h2>
   <form id="searchForm">
-    닉네임: <input type="text" id="nickname" required>
+    닉네임: <input type="text" id="nickname" required />
     <button type="submit">조회</button>
   </form>
+
   <div id="avatarBox">아바타 이미지가 여기에 표시됩니다.</div>
+  <div id="urlBox">아바타 이미지 주소가 여기에 표시됩니다.</div>
   <div id="consoleBox"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
