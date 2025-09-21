@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>넥슨 프로필 조회</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .search-form {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .nickname-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .nickname-input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        .search-btn {
+            padding: 15px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .search-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result-container {
+            padding: 30px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #c33;
+            margin-bottom: 20px;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            padding: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .profile-header {
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .avatar-section {
+            margin-bottom: 20px;
+        }
+        
+        .avatar-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .player-info {
+            padding: 25px;
+        }
+        
+        .player-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .player-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .detail-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .detail-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .stats-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .stats-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .stat-value.losses {
+            color: #f44336;
+        }
+        
+        .stat-value.draws {
+            color: #ff9800;
+        }
+        
+        .stat-value.win-rate {
+            color: #2196F3;
+        }
+        
+        .url-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            font-size: 0.9em;
+            color: #1976d2;
+        }
+        
+        .url-link {
+            color: #1976d2;
+            text-decoration: none;
+        }
+        
+        .url-link:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 넥슨 프로필 조회</h1>
+            <p>닉네임을 입력하여 프로필과 승부 기록을 확인하세요</p>
+        </div>
+        
+        <div class="search-form">
+            <div class="input-group">
+                <input type="text" id="nicknameInput" class="nickname-input" placeholder="닉네임을 입력하세요" />
+                <button onclick="searchProfile()" class="search-btn" id="searchBtn">
+                    🔍 검색
+                </button>
+            </div>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <p style="text-align: center; color: #666; font-style: italic;">닉네임을 입력하고 검색 버튼을 클릭하세요</p>
+        </div>
+    </div>
+
+    <script>
+        let currentProfile = null;
+        
+        // Enter 키 이벤트
+        document.getElementById('nicknameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProfile();
+            }
+        });
+        
+        async function searchProfile() {
+            const nickname = document.getElementById('nicknameInput').value.trim();
+            const resultContainer = document.getElementById('resultContainer');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            if (!nickname) {
+                resultContainer.innerHTML = '<div class="error">닉네임을 입력해주세요</div>';
+                return;
+            }
+            
+            // 로딩 상태
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = '🔍 검색중...';
+            resultContainer.innerHTML = '<div class="loading">프로필을 검색하는 중입니다</div>';
+            
+            try {
+                const response = await fetch(`/.netlify/functions/ca-profile?nickname=${encodeURIComponent(nickname)}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    resultContainer.innerHTML = `<div class="error">${data.error}</div>`;
+                } else {
+                    currentProfile = data;
+                    displayProfile(data);
+                }
+            } catch (error) {
+                resultContainer.innerHTML = `<div class="error">요청 실패: ${error.message}</div>`;
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.innerHTML = '🔍 검색';
+            }
+        }
+        
+        function displayProfile(profile) {
+            const resultContainer = document.getElementById('resultContainer');
+            
+            let avatarSection = '';
+            if (profile.avatarUrl) {
+                avatarSection = `
+                    <div class="avatar-section">
+                        <img src="${profile.avatarUrl}" alt="아바타" class="avatar-img" 
+                             onerror="this.style.display='none'" />
+                    </div>
+                `;
+            }
+            
+            let statsSection = '';
+            if (profile.gameStats.wins !== null) {
+                statsSection = `
+                    <div class="stats-section">
+                        <h3 class="stats-title">🏆 승부 기록</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">승</div>
+                                <div class="stat-value">${profile.gameStats.wins || '0'}</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">패</div>
+                                <div class="stat-value losses">${profile.gameStats.losses || '0'}</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">무</div>
+                                <div class="stat-value draws">${profile.gameStats.draws || '0'}</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">승률</div>
+                                <div class="stat-value win-rate">${profile.gameStats.winRate || '0%'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultContainer.innerHTML = `
+                <div class="profile-card">
+                    <div class="profile-header">
+                        ${avatarSection}
+                        <div class="player-name">${profile.playerName || profile.nickname}</div>
+                    </div>
+                    
+                    <div class="player-info">
+                        <div class="player-details">
+                            ${profile.level ? `
+                                <div class="detail-item">
+                                    <div class="detail-label">레벨</div>
+                                    <div class="detail-value">${profile.level}</div>
+                                </div>
+                            ` : ''}
+                            ${profile.guild ? `
+                                <div class="detail-item">
+                                    <div class="detail-label">길드</div>
+                                    <div class="detail-value">${profile.guild}</div>
+                                </div>
+                            ` : ''}
+                            <div class="detail-item">
+                                <div class="detail-label">검색 시간</div>
+                                <div class="detail-value">${new Date(profile.timestamp).toLocaleString('ko-KR')}</div>
+                            </div>
+                        </div>
+                        
+                        ${profile.avatarUrl ? `
+                            <div class="url-info">
+                                <strong>아바타 이미지 URL:</strong><br>
+                                <a href="${profile.avatarUrl}" target="_blank" class="url-link">${profile.avatarUrl}</a>
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${statsSection}
+                    
+                    <div style="padding: 20px; border-top: 1px solid #e9ecef; background: #f8f9fa;">
+                        <div style="font-size: 0.9em; color: #666; text-align: center;">
+                            원본 페이지: <a href="${profile.sourceUrl}" target="_blank" class="url-link">${profile.sourceUrl}</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
