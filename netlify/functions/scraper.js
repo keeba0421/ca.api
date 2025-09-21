@@ -9,7 +9,6 @@ exports.handler = async (event, context) => {
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   };
 
-  // OPTIONS 요청 처리
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -19,6 +18,7 @@ exports.handler = async (event, context) => {
   }
 
   const url = event.queryStringParameters.url;
+  const mode = event.queryStringParameters.mode || 'parsed'; // 'parsed' 또는 'raw'
   
   if (!url) {
     return {
@@ -30,18 +30,37 @@ exports.handler = async (event, context) => {
 
   try {
     // 웹페이지 요청
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      }
+    });
+    
     const html = await response.text();
     
-    // HTML 파싱
+    // raw 모드: 전체 HTML 반환
+    if (mode === 'raw') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ 
+          html: html,
+          url: url,
+          contentLength: html.length,
+          timestamp: new Date().toISOString()
+        }),
+      };
+    }
+    
+    // parsed 모드: 기존 파싱 방식
     const $ = cheerio.load(html);
     
-    // 데이터 추출 (예시: 제목과 메타 정보)
     const data = {
       title: $('title').text().trim(),
       description: $('meta[name="description"]').attr('content') || '',
       h1: $('h1').first().text().trim(),
       links: [],
+      html: html, // 전체 HTML도 함께 포함
     };
     
     // 링크 수집 (최대 10개)
