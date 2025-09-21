@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>넥슨 프로필 조회</title>
+    <title>넥슨 아바타 이미지 조회</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -28,29 +28,26 @@
         }
         
         .header {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
             padding: 30px;
             text-align: center;
             color: white;
         }
         
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .search-form {
             padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
         }
         
         .input-group {
             display: flex;
             gap: 10px;
-            max-width: 500px;
-            margin: 0 auto;
+            margin-bottom: 20px;
         }
         
         .nickname-input {
@@ -64,13 +61,13 @@
         }
         
         .nickname-input:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            border-color: #FF6B6B;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
         }
         
         .search-btn {
             padding: 15px 30px;
-            background: #4CAF50;
+            background: #FF6B6B;
             color: white;
             border: none;
             border-radius: 25px;
@@ -78,10 +75,11 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
+            white-space: nowrap;
         }
         
         .search-btn:hover {
-            background: #45a049;
+            background: #FF5252;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
@@ -93,13 +91,14 @@
         }
         
         .result-container {
-            padding: 30px;
+            padding: 0 30px 30px;
         }
         
         .loading {
             text-align: center;
             padding: 40px;
             color: #666;
+            font-size: 1.1em;
         }
         
         .loading::after {
@@ -115,7 +114,7 @@
         }
         
         .error {
-            background: #fee;
+            background: #ffe6e6;
             color: #c33;
             padding: 20px;
             border-radius: 10px;
@@ -123,143 +122,73 @@
             margin-bottom: 20px;
         }
         
-        .profile-card {
+        .avatar-card {
             background: white;
             border-radius: 15px;
-            padding: 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .profile-header {
-            background: linear-gradient(45deg, #2196F3, #21CBF3);
-            color: white;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        .avatar-section {
+        .avatar-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            border: 5px solid #FF6B6B;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             margin-bottom: 20px;
-        }
-        
-        .avatar-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .player-info {
-            padding: 25px;
+            object-fit: cover;
         }
         
         .player-name {
             font-size: 1.8em;
             font-weight: bold;
-            margin-bottom: 10px;
             color: #333;
+            margin-bottom: 15px;
         }
         
-        .player-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .detail-item {
-            text-align: center;
+        .avatar-url {
+            background: #f8f9fa;
             padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .detail-label {
+            border-radius: 8px;
+            margin: 20px 0;
+            word-break: break-all;
             font-size: 0.9em;
             color: #666;
-            margin-bottom: 5px;
         }
         
-        .detail-value {
-            font-size: 1.1em;
+        .avatar-link {
+            color: #FF6B6B;
+            text-decoration: none;
             font-weight: bold;
-            color: #333;
         }
         
-        .stats-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-top: 1px solid #e9ecef;
+        .avatar-link:hover {
+            text-decoration: underline;
         }
         
-        .stats-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #333;
+        .copy-btn {
+            background: #4ECDC4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
+        .copy-btn:hover {
+            background: #45B7B8;
         }
         
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .stat-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 8px;
-        }
-        
-        .stat-value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-        
-        .stat-value.losses {
-            color: #f44336;
-        }
-        
-        .stat-value.draws {
-            color: #ff9800;
-        }
-        
-        .stat-value.win-rate {
-            color: #2196F3;
-        }
-        
-        .url-info {
+        .source-info {
             margin-top: 20px;
             padding: 15px;
             background: #e3f2fd;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 0.9em;
             color: #1976d2;
-        }
-        
-        .url-link {
-            color: #1976d2;
-            text-decoration: none;
-        }
-        
-        .url-link:hover {
-            text-decoration: underline;
         }
         
         @media (max-width: 600px) {
@@ -273,11 +202,12 @@
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
             
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .avatar-image {
+                width: 150px;
+                height: 150px;
             }
         }
     </style>
@@ -285,14 +215,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎮 넥슨 프로필 조회</h1>
-            <p>닉네임을 입력하여 프로필과 승부 기록을 확인하세요</p>
+            <h1>🎮 넥슨 아바타 조회</h1>
+            <p>닉네임을 입력하여 아바타 이미지를 확인하세요</p>
         </div>
         
         <div class="search-form">
             <div class="input-group">
                 <input type="text" id="nicknameInput" class="nickname-input" placeholder="닉네임을 입력하세요" />
-                <button onclick="searchProfile()" class="search-btn" id="searchBtn">
+                <button onclick="getAvatar()" class="search-btn" id="searchBtn">
                     🔍 검색
                 </button>
             </div>
@@ -304,16 +234,16 @@
     </div>
 
     <script>
-        let currentProfile = null;
+        let currentData = null;
         
         // Enter 키 이벤트
         document.getElementById('nicknameInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                searchProfile();
+                getAvatar();
             }
         });
         
-        async function searchProfile() {
+        async function getAvatar() {
             const nickname = document.getElementById('nicknameInput').value.trim();
             const resultContainer = document.getElementById('resultContainer');
             const searchBtn = document.getElementById('searchBtn');
@@ -326,17 +256,17 @@
             // 로딩 상태
             searchBtn.disabled = true;
             searchBtn.innerHTML = '🔍 검색중...';
-            resultContainer.innerHTML = '<div class="loading">프로필을 검색하는 중입니다</div>';
+            resultContainer.innerHTML = '<div class="loading">아바타 이미지를 검색하는 중입니다</div>';
             
             try {
-                const response = await fetch(`/.netlify/functions/ca-profile?nickname=${encodeURIComponent(nickname)}`);
+                const response = await fetch(`/.netlify/functions/nexon-avatar?nickname=${encodeURIComponent(nickname)}`);
                 const data = await response.json();
                 
                 if (data.error) {
                     resultContainer.innerHTML = `<div class="error">${data.error}</div>`;
                 } else {
-                    currentProfile = data;
-                    displayProfile(data);
+                    currentData = data;
+                    displayAvatar(data);
                 }
             } catch (error) {
                 resultContainer.innerHTML = `<div class="error">요청 실패: ${error.message}</div>`;
@@ -346,90 +276,51 @@
             }
         }
         
-        function displayProfile(profile) {
+        function displayAvatar(data) {
             const resultContainer = document.getElementById('resultContainer');
             
-            let avatarSection = '';
-            if (profile.avatarUrl) {
-                avatarSection = `
-                    <div class="avatar-section">
-                        <img src="${profile.avatarUrl}" alt="아바타" class="avatar-img" 
-                             onerror="this.style.display='none'" />
-                    </div>
-                `;
-            }
-            
-            let statsSection = '';
-            if (profile.gameStats.wins !== null) {
-                statsSection = `
-                    <div class="stats-section">
-                        <h3 class="stats-title">🏆 승부 기록</h3>
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-label">승</div>
-                                <div class="stat-value">${profile.gameStats.wins || '0'}</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-label">패</div>
-                                <div class="stat-value losses">${profile.gameStats.losses || '0'}</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-label">무</div>
-                                <div class="stat-value draws">${profile.gameStats.draws || '0'}</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-label">승률</div>
-                                <div class="stat-value win-rate">${profile.gameStats.winRate || '0%'}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
             resultContainer.innerHTML = `
-                <div class="profile-card">
-                    <div class="profile-header">
-                        ${avatarSection}
-                        <div class="player-name">${profile.playerName || profile.nickname}</div>
+                <div class="avatar-card">
+                    <img src="${data.avatarUrl}" alt="아바타" class="avatar-image" 
+                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect width=%22100%%22 height=%22100%%22 fill=%22%23ddd%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 dy=%22.3em%22>이미지 없음</text></svg>'" />
+                    
+                    <div class="player-name">${data.playerName}</div>
+                    
+                    <div class="avatar-url">
+                        <strong>아바타 이미지 URL:</strong><br>
+                        <a href="${data.avatarUrl}" target="_blank" class="avatar-link">${data.avatarUrl}</a>
+                        <br>
+                        <button class="copy-btn" onclick="copyToClipboard('${data.avatarUrl}')">📋 URL 복사</button>
                     </div>
                     
-                    <div class="player-info">
-                        <div class="player-details">
-                            ${profile.level ? `
-                                <div class="detail-item">
-                                    <div class="detail-label">레벨</div>
-                                    <div class="detail-value">${profile.level}</div>
-                                </div>
-                            ` : ''}
-                            ${profile.guild ? `
-                                <div class="detail-item">
-                                    <div class="detail-label">길드</div>
-                                    <div class="detail-value">${profile.guild}</div>
-                                </div>
-                            ` : ''}
-                            <div class="detail-item">
-                                <div class="detail-label">검색 시간</div>
-                                <div class="detail-value">${new Date(profile.timestamp).toLocaleString('ko-KR')}</div>
-                            </div>
-                        </div>
-                        
-                        ${profile.avatarUrl ? `
-                            <div class="url-info">
-                                <strong>아바타 이미지 URL:</strong><br>
-                                <a href="${profile.avatarUrl}" target="_blank" class="url-link">${profile.avatarUrl}</a>
-                            </div>
-                        ` : ''}
-                    </div>
-                    
-                    ${statsSection}
-                    
-                    <div style="padding: 20px; border-top: 1px solid #e9ecef; background: #f8f9fa;">
-                        <div style="font-size: 0.9em; color: #666; text-align: center;">
-                            원본 페이지: <a href="${profile.sourceUrl}" target="_blank" class="url-link">${profile.sourceUrl}</a>
-                        </div>
+                    <div class="source-info">
+                        <strong>조회 시간:</strong> ${new Date(data.timestamp).toLocaleString('ko-KR')}<br>
+                        <strong>원본 페이지:</strong> <a href="${data.sourceUrl}" target="_blank" class="avatar-link">넥슨 프로필 보기</a>
                     </div>
                 </div>
             `;
+        }
+        
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                alert('URL이 클립보드에 복사되었습니다! 📋');
+            } catch (err) {
+                console.error('복사 실패:', err);
+                
+                // 대체 방법: 텍스트 영역 생성해서 복사
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('URL이 복사되었습니다! 📋');
+                } catch (err2) {
+                    alert('복사에 실패했습니다. URL을 직접 선택해서 복사해주세요.');
+                }
+                document.body.removeChild(textArea);
+            }
         }
     </script>
 </body>
